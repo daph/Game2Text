@@ -17,14 +17,19 @@ from imageprofile import export_image_profile, load_image_profiles, open_image_p
 from gamescript import load_game_scripts, open_game_script
 from dictionary import load_all_dictionaries, look_up, get_local_dictionaries, load_dictionary, get_jpod_audio_url
 from config import r_config, r_config_all, r_config_section, w_config, APP_CONFIG, LOG_CONFIG, TEXTHOOKER_CONFIG
+from manga_ocr import MangaOcr
 
 session_start_time = get_time_string()
 textractor = None
+
+MOCR = MangaOcr()
 
 # run_eel()
 
 # Set web files folder and optionally specify which file types to check for eel.expose()
 #   *Default allowed_extensions are: ['.js', '.html', '.txt', '.htm', '.xhtml']
+
+
 
 def close(page, sockets):
     if not sockets:
@@ -32,7 +37,7 @@ def close(page, sockets):
 
 @eel.expose     
 def recognize_image(engine, image, orientation):
-    return detect_and_log(engine, image, orientation, session_start_time, get_time_string(), audio_recorder)
+    return detect_and_log(engine, image, orientation, session_start_time, get_time_string(), audio_recorder, MOCR)
 
 @eel.expose
 def log_output(text):
